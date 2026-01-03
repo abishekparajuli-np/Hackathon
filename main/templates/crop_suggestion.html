@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="feature-section">
+    <h1>🌱 Crop Recommendation System</h1>
+    <p>Enter soil and weather details to get the most suitable crop.</p>
+
+    <form method="post" class="crop-form">
+
+        <label for="N">Nitrogen (N)</label>
+        <input type="number" step="any" name="N" id="N" placeholder="e.g. 90" required>
+
+        <label for="P">Phosphorus (P)</label>
+        <input type="number" step="any" name="P" id="P" placeholder="e.g. 42" required>
+
+        <label for="K">Potassium (K)</label>
+        <input type="number" step="any" name="K" id="K" placeholder="e.g. 43" required>
+
+        <label for="temperature">Temperature (°C)</label>
+        <input type="number" step="any" name="temperature" id="temperature" placeholder="e.g. 25" required>
+
+        <label for="humidity">Humidity (%)</label>
+        <input type="number" step="any" name="humidity" id="humidity" placeholder="e.g. 80" required>
+
+        <label for="ph">Soil pH</label>
+        <input type="number" step="any" name="ph" id="ph" placeholder="e.g. 6.5" required>
+
+        <label for="rainfall">Rainfall (mm)</label>
+        <input type="number" step="any" name="rainfall" id="rainfall" placeholder="e.g. 200" required>
+
+        <button type="submit">Get Crop Recommendation</button>
+    </form>
+
+{% if suggestion %}
+<div class="result">
+    <h2>Crop Recommendation Result</h2>
+
+    <p><strong> Recommended Crop:</strong> {{ suggestion.predicted_crop }}</p>
+
+    <hr>
+
+    <p><strong>Recommended Fertilizer:</strong> {{ suggestion.fertilizer }}</p>
+    <p><strong>Suitable Season:</strong> {{ suggestion.season }}</p>
+
+    <p><strong>Ideal Soil pH:</strong> {{ suggestion.ph_level | replace("_", " ") | title }}</p>
+    <p><strong>Rainfall Requirement:</strong> {{ suggestion.rainfall_level | replace("_", " ") | title }}</p>
+</div>
+{% endif %}
+
+    {% if error %}
+    <div class="error-message">
+        {{ error }}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

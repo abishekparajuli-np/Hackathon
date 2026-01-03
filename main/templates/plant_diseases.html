@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="feature-section">
+    <h1>Plant Disease Detection</h1>
+    <p>Upload an image of your plant to detect potential diseases and get treatment suggestions.</p>
+    <form method="post" enctype="multipart/form-data">
+        <label for="plant_image">Select Plant Image:</label>
+        <input type="file" name="plant_image" id="plant_image" accept="image/*" required>
+        <button type="submit">Detect Disease</button>
+    </form>
+    {% if result %}
+    <div class="result">
+        <h2>Detection Result</h2>
+        <p><strong>Disease:</strong> {{ result.disease }}</p>
+        <p><strong>Treatment:</strong> {{ result.treatment }}</p>
+    </div>
+    {% endif %}
+    {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+</div>
+{% endblock %}  

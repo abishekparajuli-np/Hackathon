@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="feature-section">
+    <h1>🐄 Cow Skin Disease Detection</h1>
+    <p>
+        Upload an image of the cow skin to detect possible diseases.
+        (Symptoms input is optional and for future enhancement.)
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+
+        <!-- Image Upload -->
+        <label for="animal_image">Upload Animal Image:</label>
+        <input type="file" name="animal_image" id="animal_image" accept="image/*" required>
+
+        <button type="submit">Detect Disease</button>
+    </form>
+
+    {% if result %}
+    <div class="result">
+        <h2>Detection Result</h2>
+
+        <p><strong>Disease:</strong> {{ result.disease }}</p>
+        <p><strong>Confidence:</strong> {{ result.confidence | round(2) }}%</p>
+
+        <p><strong>Advice:</strong></p>
+        <p>{{ result.advice }}</p>
+
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error-message">
+        {{ error }}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

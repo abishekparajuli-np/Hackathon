@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="projects-section">
+    <h1>Farming Assistance Platform</h1>
+    <div class="projects-container">
+        <div class="project-card">
+            <img src="{{ url_for('static', filename='pics/plant_disease.jpg') }}" alt="Plant Disease Detection" class="project-image">
+            <h2>Plant Disease Detection</h2>
+            <p>Upload plant images to detect diseases and get recommendations for treatment.</p>
+            <div class="project-buttons">
+                <a href="/plant_diseases" class="button live-demo">Get Started</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <img src="{{ url_for('static', filename='pics/animal_disease.jpg') }}" alt="Cow Skin Disease" class="project-image">
+            <h2>Cow Skin Disease Detection</h2>
+            <p>Upload an image of your cow and get to know if its healthy or have some kind of skin disease</p>
+            <div class="project-buttons">
+                <a href="/cow_skin_disease" class="button live-demo">Get Started</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <img src="{{ url_for('static', filename='pics/crop_suggestion.jpg') }}" alt="Crop Suggestion" class="project-image">
+            <h2>Crop Suggestion</h2>
+            <p>Based on your location (longitude and latitude) and market demand, get crop recommendations.</p>
+            <div class="project-buttons">
+                <a href="/crop_suggestion" class="button live-demo">Get Started</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

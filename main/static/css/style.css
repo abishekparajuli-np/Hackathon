@@ -1,0 +1,355 @@
+/* ===================== General Styles ===================== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background-color: #F8FAFC;
+    color: #0B1220;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+/* ===================== Navigation Bar ===================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: linear-gradient(90deg, #0F172A, #1E293B);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+}
+
+.logo-image {
+    width: 48px;
+    height: auto;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #E5E7EB;
+    transition: color 0.3s ease;
+}
+
+.navbar ul a:hover {
+    color: #14B8A6;
+}
+
+/* ===================== Footer ===================== */
+.footer {
+    width: 100%;
+    padding: 24px;
+    background: #0F172A;
+    color: #CBD5F5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.95em;
+}
+
+
+
+/* ===================== Projects Section ===================== */
+.projects-section {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.projects-section h1 {
+    font-size: 2.6em;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 45px;
+}
+
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px;
+}
+
+.project-card {
+    background: #FFFFFF;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    width: 310px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+}
+
+.project-image {
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.project-card h2 {
+    font-size: 1.4em;
+    color: #0F172A;
+    margin-bottom: 8px;
+}
+
+.project-card p {
+    font-size: 0.95em;
+    color: #64748B;
+    margin-bottom: 20px;
+}
+
+.project-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.button {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9em;
+    padding: 10px 22px;
+    color: #FFFFFF;
+    border-radius: 999px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.live-demo {
+    background: linear-gradient(135deg, #14B8A6, #6366F1);
+}
+
+.live-demo:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #6366F1, #14B8A6);
+}
+
+/* ===================== Feature Section ===================== */
+.feature-section {
+    max-width: 820px;
+    margin: 70px auto;
+    padding: 45px;
+    background: #FFFFFF;
+    border-radius: 22px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+    text-align: center;
+}
+
+.feature-section h1 {
+    font-size: 2.4em;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 18px;
+}
+
+.feature-section p {
+    font-size: 1.05em;
+    color: #475569;
+    margin-bottom: 35px;
+}
+
+.feature-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.feature-section label {
+    font-weight: 600;
+    color: #0F172A;
+    text-align: left;
+}
+
+.feature-section input,
+.feature-section textarea,
+.feature-section select {
+    width: 100%;
+    padding: 13px 15px;
+    font-size: 1em;
+    border-radius: 12px;
+    border: 1.8px solid #CBD5E1;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-section input:focus,
+.feature-section textarea:focus,
+.feature-section select:focus {
+    border-color: #14B8A6;
+    box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
+}
+
+.feature-section textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.feature-section button {
+    margin-top: 10px;
+    padding: 14px 36px;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #14B8A6, #6366F1);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.feature-section button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.35);
+}
+
+/* ===================== Result & Error ===================== */
+.result {
+    margin-top: 30px;
+    padding: 22px;
+    background: #F1F5F9;
+    border-radius: 14px;
+    text-align: left;
+}
+
+.result h2 {
+    color: #6366F1;
+}
+
+.result p {
+    color: #0B1220;
+}
+
+.error-message {
+    color: #DC2626;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .feature-section {
+        margin: 25px;
+        padding: 25px;
+    }
+
+    .feature-section button {
+        width: 100%;
+    }
+}
+/* ===================== Crop Suggestion Enhancements ===================== */
+
+/* Form spacing consistency */
+.crop-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Result card refinement */
+.result {
+    margin-top: 35px;
+    padding: 28px;
+    background: linear-gradient(145deg, #F8FAFC, #EEF2FF);
+    border-radius: 18px;
+    border-left: 6px solid #6366F1;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Result title */
+.result h2 {
+    font-size: 1.6em;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #4F46E5;
+}
+
+/* Result text */
+.result p {
+    font-size: 1.05em;
+    margin: 10px 0;
+    color: #0F172A;
+    line-height: 1.6;
+}
+
+/* Highlighted crop name */
+.result p strong {
+    color: #0F766E;
+}
+
+/* Divider inside result */
+.result hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, #CBD5E1, transparent);
+    margin: 16px 0;
+}
+
+/* Info badges (optional future use) */
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85em;
+    font-weight: 600;
+    background: #E0F2FE;
+    color: #0369A1;
+}
+
+/* Error message refinement */
+.error-message {
+    background: #FEE2E2;
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: #B91C1C;
+    font-weight: 600;
+    border-left: 5px solid #DC2626;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .result {
+        padding: 20px;
+    }
+
+    .result h2 {
+        font-size: 1.35em;
+    }
+
+    .result p {
+        font-size: 0.95em;
+    }
+}
