@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farming Assistance Platform</title>
+    <title>KishanAi</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='pics/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <nav class="navbar">
-        <img src="{{ url_for('static', filename='pics/logo.jpg') }}" alt="Logo" class="logo-image">
+        <img src="{{ url_for('static', filename='pics/logo.png') }}" alt="Logo" class="logo-image">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/plant_diseases">Plant Diseases</a></li>
+            <li><a href="/plant_camera">Plant Diseases</a></li>
             <li><a href="/cow_skin_disease">Cow Skin Diseases</a></li>
             <li><a href="/crop_suggestion">Crop Suggestion</a></li>
+            <li><a href="/insights">Farming Insights</a></li>
         </ul>
     </nav>
     <main>
         {% block content %}{% endblock %}
     </main>
     <footer class="footer">
-        <p>&copy; 2023 Farming Assistance Platform. All rights reserved.</p>
+        <p>&copy; 2026 KishanAi Platform. All rights reserved.</p>
     </footer>
 </body>
 </html>

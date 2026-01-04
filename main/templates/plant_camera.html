@@ -1,142 +1,139 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{{ title or "Plant Camera" }}</title>
-    <style>
-      body {
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-        margin: 16px;
-        background: #fafafa;
-        color: #111;
-      }
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-      .controls {
-        margin: 12px 0;
-      }
-      button {
-        padding: 8px 14px;
-        font-size: 14px;
-        margin-right: 8px;
-      }
-      #video-wrap {
-        background: #000;
-        display: inline-block;
-        border: 1px solid #ccc;
-      }
-      #stream {
-        display: block;
-        max-width: 100%;
-        height: auto;
-      }
-      .status {
-        margin-top: 8px;
-      }
-      .badge {
-        display:inline-block;
-        padding:4px 8px;
-        border-radius:4px;
-        background:#efefef;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Plant Camera</h1>
+{% extends "layout.html" %}
+{% block title %}{{ title or "Plant Camera" }}{% endblock %}
 
-      <div class="controls">
-        <button id="startBtn">Start Camera</button>
-        <button id="stopBtn" disabled>Stop Camera</button>
-        <span class="status">
-          Stream: <span id="streamStatus" class="badge">stopped</span>
-          &nbsp;|&nbsp;
-          Prediction: <span id="predictionText" class="badge">Waiting...</span>
-        </span>
-      </div>
+{% block head_extra %}
+<style>
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    margin: 16px;
+    background: #fafafa;
+    color: #111;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .controls {
+    margin: 12px 0;
+  }
+  button {
+    padding: 8px 14px;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+  #video-wrap {
+    background: #000;
+    display: inline-block;
+    border: 1px solid #ccc;
+  }
+  #stream {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .status {
+    margin-top: 8px;
+  }
+  .badge {
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:4px;
+    background:#efefef;
+  }
+</style>
+{% endblock %}
 
-      <div id="video-wrap">
-        <!-- Use an <img> to display the MJPEG stream -->
-        <img id="stream" src="" alt="Video stream will appear here" />
-      </div>
+{% block content %}
+<main class="main-content">
+  <div class="container">
+    <h1>Plant Camera</h1>
+
+    <div class="controls">
+      <button id="startBtn">Start Camera</button>
+      <button id="stopBtn" disabled>Stop Camera</button>
+      <span class="status">
+        Stream: <span id="streamStatus" class="badge">stopped</span>
+        &nbsp;|&nbsp;
+        Prediction: <span id="predictionText" class="badge">Waiting...</span>
+      </span>
     </div>
 
-    <script>
-      const startBtn = document.getElementById("startBtn");
-      const stopBtn = document.getElementById("stopBtn");
-      const streamImg = document.getElementById("stream");
-      const streamStatus = document.getElementById("streamStatus");
-      const predictionText = document.getElementById("predictionText");
+    <div id="video-wrap">
+      <img id="stream" src="" alt="Video stream will appear here" />
+    </div>
+  </div>
+</main>
 
-      const videoFeedPath = "{{ url_for('video_feed') }}";
-      const startPath = "{{ url_for('start_capture') }}";
-      const stopPath = "{{ url_for('stop_capture') }}";
-      const latestPath = "{{ url_for('latest_result') }}";
+<script>
+  const startBtn = document.getElementById("startBtn");
+  const stopBtn = document.getElementById("stopBtn");
+  const streamImg = document.getElementById("stream");
+  const streamStatus = document.getElementById("streamStatus");
+  const predictionText = document.getElementById("predictionText");
 
-      let pollingHandle = null;
+  const videoFeedPath = "{{ url_for('video_feed') }}";
+  const startPath = "{{ url_for('start_capture') }}";
+  const stopPath = "{{ url_for('stop_capture') }}";
+  const latestPath = "{{ url_for('latest_result') }}";
 
-      async function startCamera() {
-        try {
-          const res = await fetch(startPath, { method: "POST" });
-          if (!res.ok) {
-            const err = await res.json().catch(() => ({}));
-            alert("Failed to start camera: " + (err.message || res.statusText));
-            return;
-          }
-          // start showing stream (cache-bust)
-          streamImg.src = videoFeedPath + "?t=" + Date.now();
-          streamStatus.textContent = "running";
-          startBtn.disabled = true;
-          stopBtn.disabled = false;
+  let pollingHandle = null;
 
-          // start polling for latest prediction every second
-          if (!pollingHandle) {
-            pollingHandle = setInterval(fetchLatest, 1000);
-            fetchLatest(); // immediate
-          }
-        } catch (e) {
-          console.error("startCamera error", e);
-          alert("Error starting camera: " + e.message);
-        }
+  async function startCamera() {
+    try {
+      const res = await fetch(startPath, { method: "POST" });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        alert("Failed to start camera: " + (err.message || res.statusText));
+        return;
       }
-
-      async function stopCamera() {
-        try {
-          await fetch(stopPath, { method: "POST" });
-        } catch (e) {
-          console.warn("stopCamera request failed:", e);
-        }
-        // stop showing stream
-        streamImg.src = "";
-        streamStatus.textContent = "stopped";
-        startBtn.disabled = false;
-        stopBtn.disabled = true;
-
-        // stop polling
-        if (pollingHandle) {
-          clearInterval(pollingHandle);
-          pollingHandle = null;
-        }
+      streamImg.src = videoFeedPath + "?t=" + Date.now();
+      streamStatus.textContent = "running";
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      
+      if (!pollingHandle) {
+        pollingHandle = setInterval(fetchLatest, 1000);
+        fetchLatest(); 
       }
+    } catch (e) {
+      console.error("startCamera error", e);
+      alert("Error starting camera: " + e.message);
+    }
+  }
 
-      async function fetchLatest() {
-        try {
-          const r = await fetch(latestPath, { cache: "no-store" });
-          if (!r.ok) return;
-          const j = await r.json();
-          if (j && j.result !== undefined) {
-            predictionText.textContent = j.result;
-          }
-        } catch (e) {
-          // ignore polling errors
-        }
+  async function stopCamera() {
+    try {
+      await fetch(stopPath, { method: "POST" });
+    } catch (e) {
+      console.warn("stopCamera request failed:", e);
+    }
+  
+    streamImg.src = "";
+    streamStatus.textContent = "stopped";
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+
+  
+    if (pollingHandle) {
+      clearInterval(pollingHandle);
+      pollingHandle = null;
+    }
+  }
+
+  async function fetchLatest() {
+    try {
+      const r = await fetch(latestPath, { cache: "no-store" });
+      if (!r.ok) return;
+      const j = await r.json();
+      if (j && j.result !== undefined) {
+        predictionText.textContent = j.result;
       }
+    } catch (e) {
+     
+    }
+  }
 
-      startBtn.addEventListener("click", startCamera);
-      stopBtn.addEventListener("click", stopCamera);
-    </script>
-  </body>
-</html>
+  startBtn.addEventListener("click", startCamera);
+  stopBtn.addEventListener("click", stopCamera);
+</script>
+{% endblock %}

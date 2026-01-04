@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+{% block title %}Insights - Kishan AI{% endblock %}
+
+{% block head_extra %}
+<!-- Ensure insights CSS is loaded (layout.html should include block head_extra) -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/insights.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">Insights & Visualizations</h1>
+      <p class="page-subtitle">Data-driven analysis and visual summaries to help farmers plan better and act earlier.</p>
+    </div>
+  </div>
+
+  <!-- Each section is a blog-card. pics use .responsive-image to scale nicely -->
+  <div class="container insights-list">
+
+    <article class="blog-card">
+      <div class="card-inner">
+        <div class="card-media">
+          <img src="{{ url_for('static', filename='pics/seasonal_crop_distribution_clean.png') }}"
+               alt="Seasonal crop distribution"
+               class="responsive-image">
+        </div>
+        <div class="card-body">
+          <h2>Understanding Seasonal Crop Distribution</h2>
+          <p>
+            Selecting the right crop for the right season significantly increases yield and reduces disease risk.
+            The chart above shows crop suitability across Spring/Autumn, Summer and Winter.
+          </p>
+
+          <div class="highlight-box">
+            <strong>Kishan AI Insight:</strong>
+            Crops grown outside their suitable season are more vulnerable to disease. Kishan AI provides season-aware recommendations.
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="card-inner">
+        <div class="card-media">
+          <img src="{{ url_for('static', filename='pics/fertilizer_crop_heatmap.png') }}"
+               alt="Fertilizer usage heatmap"
+               class="responsive-image">
+        </div>
+        <div class="card-body">
+          <h2>Fertilizer Usage Patterns Across Crops</h2>
+          <p>
+            Proper fertilizer selection maintains soil health and maximizes yield. This visualization highlights fertilizer preferences across crops.
+          </p>
+          <h3>Key Insights</h3>
+          <ul>
+            <li>Cereals like rice and maize favor nitrogen-rich fertilizers.</li>
+            <li>Pulses require lower nitrogen and balanced nutrient mixes.</li>
+            <li>Fruit crops often benefit from potassium-rich formulations.</li>
+          </ul>
+
+          <div class="highlight-box">
+            <strong>Kishan AI Insight:</strong>
+            Kishan AI recommends fertilizer plans based on crop type and local conditions, reducing waste and improving efficiency.
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="card-inner">
+        <div class="card-media">
+          <img src="{{ url_for('static', filename='pics/crop_risk_bubble_clean.png') }}"
+               alt="Crop risk analysis"
+               class="responsive-image">
+        </div>
+        <div class="card-body">
+          <h2>Crop Risk Analysis: Temperature & Rainfall</h2>
+          <p>
+            Climate conditions determine disease risk. This analysis visualizes crop vulnerability across temperature and rainfall ranges.
+          </p>
+
+          <div class="highlight-box">
+            <strong>Kishan AI Insight:</strong>
+            High temperature combined with heavy rainfall increases disease risk for several crops. Kishan AI helps identify low-risk alternatives.
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="card-inner">
+        <div class="card-media">
+          <img src="{{ url_for('static', filename='pics/nutrient_ratios_radar.png') }}"
+               alt="Nutrient ratio analysis"
+               class="responsive-image">
+        </div>
+        <div class="card-body">
+          <h2>Nutrient Ratio Analysis for Optimal Growth</h2>
+          <p>
+            Different crops require specific N-P-K balances. This radar comparison shows nutrient demand profiles across crops.
+          </p>
+
+          <div class="highlight-box">
+            <strong>Kishan AI Insight:</strong>
+            Kishan AI tailors nutrient strategies to crop needs and advises on dosing to improve resilience and yield.
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="card-inner">
+        <div class="card-media">
+          <img src="{{ url_for('static', filename='pics/soil_ph_histogram_fixed.png') }}"
+               alt="Soil pH distribution"
+               class="responsive-image">
+        </div>
+        <div class="card-body">
+          <h2>Matching Crops to Soil pH</h2>
+          <p>
+            Soil pH affects nutrient availability and crop performance. This histogram shows crop distributions over pH ranges.
+          </p>
+
+          <div class="highlight-box">
+            <strong>Kishan AI Insight:</strong>
+            Most staples prefer neutral to slightly acidic soils. Kishan AI suggests crops suited to your soil chemistry.
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div> <!-- /.container -->
+
+</main>
+{% endblock %}

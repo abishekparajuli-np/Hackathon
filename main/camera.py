@@ -5,27 +5,25 @@ import threading
 import atexit
 from flask import current_app
 
-# Global camera and state
+
 _camera = None
 _camera_lock = threading.RLock()
 _camera_active = False
 
-# Capture control
+
 _capture_enabled = False
-_capture_interval = 10.0  # default seconds between saved frames
+_capture_interval = 10.0  
 _last_save_time = 0.0
 
-# Capture limit control
-_capture_max_files = 100      # default max files (0 = unlimited)
-_capture_mode = "stop"        # "stop" or "rotate"
-_capture_count = 0            # current number of files in CAPTURE_DIR
 
-# Prediction throttling / status
+_capture_max_files = 100     
+_capture_mode = "stop"        
+_capture_count = 0            
+
 PREDICT_FPS = 1.0
 _last_pred_time = 0.0
 _latest_result = "Waiting..."
 
-# Default camera properties (can be overridden via Flask config)
 _DEFAULTS = {
     "CAMERA_INDEX": 0,
     "CAMERA_BACKEND": None,
@@ -33,7 +31,7 @@ _DEFAULTS = {
     "FRAME_HEIGHT": 480,
     "FRAME_FPS": 30,
     "FOURCC": "MJPG",
-    # default temp/capture dir (will usually be overridden by app config)
+
     "TEMP_UPLOAD_FOLDER": os.path.join(os.path.abspath(os.getcwd()), "tmp_uploads"),
     "CAPTURE_DIR": os.path.join(os.path.abspath(os.getcwd()), "tmp_uploads"),
     "PREDICT_FPS": 1.0,
@@ -43,7 +41,6 @@ _DEFAULTS = {
     "DELETE_CAPTURES_ON_STOP": False,
 }
 
-# ensure default folder exists
 os.makedirs(_DEFAULTS["CAPTURE_DIR"], exist_ok=True)
 
 
@@ -73,7 +70,6 @@ def _cfg(key):
         if current_app:
             return current_app.config.get(key, _DEFAULTS.get(key))
     except RuntimeError:
-        # current_app not available (outside app context)
         pass
     return _DEFAULTS.get(key)
 
@@ -108,7 +104,6 @@ def _init_camera():
             _camera = None
             return False
 
-        # configure camera properties (drivers may ignore some)
         try:
             width = int(_cfg("FRAME_WIDTH") or 640)
             height = int(_cfg("FRAME_HEIGHT") or 480)
@@ -126,7 +121,7 @@ def _init_camera():
         except Exception:
             pass
 
-        # warm up
+      
         time.sleep(0.15)
         return True
 
@@ -162,7 +157,7 @@ def start_camera():
         except Exception:
             _capture_mode = "stop"
 
-        # count existing files in capture dir
+        
         capture_dir = _cfg("CAPTURE_DIR") or _DEFAULTS["CAPTURE_DIR"]
         try:
             os.makedirs(capture_dir, exist_ok=True)
@@ -206,7 +201,7 @@ def clear_captures():
     capture_dir = _cfg("CAPTURE_DIR") or _DEFAULTS["CAPTURE_DIR"]
     with _camera_lock:
         removed = _clear_dir_files(capture_dir)
-        # reset count
+        
         global _capture_count
         _capture_count = 0
     print(f"camera.py: clear_captures removed {removed} files from {capture_dir}")
@@ -284,8 +279,9 @@ def get_capture_status():
     }
 
 
-# Placeholder: replace with your actual model inference
+
 def predict_plant_disease(image_path):
+    #UNDER CONSTRUCTION
     return "Healthy Plant"
 
 
@@ -321,7 +317,7 @@ def generate_plant_frames():
     os.makedirs(temp_dir, exist_ok=True)
     os.makedirs(capture_dir, exist_ok=True)
 
-    # ensure camera is initialized if start_camera wasn't explicitly called
+   
     with _camera_lock:
         if _camera is None and _camera_active:
             _init_camera()
@@ -346,7 +342,7 @@ def generate_plant_frames():
             continue
 
         now = time.time()
-        # prediction throttling
+        #
         if now - _last_pred_time >= (1.0 / max(0.0001, PREDICT_FPS)):
             tmpname = f"camera_frame_{int(now*1000)}.jpg"
             temp_path = os.path.join(temp_dir, tmpname)
@@ -356,7 +352,7 @@ def generate_plant_frames():
                     _latest_result = predict_plant_disease(temp_path) or _latest_result
                 except Exception as e:
                     print("camera.py: Prediction error:", e)
-                # remove temp prediction file
+                
                 try:
                     if os.path.exists(temp_path):
                         os.remove(temp_path)
@@ -366,7 +362,7 @@ def generate_plant_frames():
                 print("camera.py: Failed to write/remove temp frame:", e)
             _last_pred_time = now
 
-        # Capture saving with limit enforcement
+        
         try:
             save_now = False
             with _camera_lock:
@@ -390,7 +386,7 @@ def generate_plant_frames():
                                 save_now = True
                             else:
                                 save_now = False
-                        else:  # stop
+                        else:  
                             with _camera_lock:
                                 _capture_enabled = False
                             print("camera.py: Capture limit reached — automatic capture disabled (mode=stop).")
@@ -410,7 +406,7 @@ def generate_plant_frames():
         except Exception as e:
             print("camera.py: Error during capture save check:", e)
 
-        # Overlay the prediction text
+        
         try:
             cv2.putText(
                 frame,
@@ -425,7 +421,7 @@ def generate_plant_frames():
         except Exception:
             pass
 
-        # Encode frame
+        
         try:
             ok, buffer = cv2.imencode(".jpg", frame)
             if not ok:

@@ -93,8 +93,6 @@ def crop_suggest():
     )
 
 
-# ----------------- Camera / Plant prediction streaming routes -----------------
-
 
 @app.route("/plant_camera")
 def plant_camera_page():
@@ -118,7 +116,6 @@ def start_capture():
     if not ok:
         return jsonify(status="error", message="Unable to open camera"), 500
 
-    # Enable saving frames to capture dir
     enable_capture()
     return jsonify(status="started")
 
@@ -128,7 +125,7 @@ def stop_capture():
     """
     Disable saving and stop the camera.
     """
-    # Disable saving first
+  
     disable_capture()
     stop_camera()
     return jsonify(status="stopped")
@@ -137,3 +134,7 @@ def stop_capture():
 @app.route("/latest_result")
 def latest_result():
     return jsonify(result=get_latest_result())
+
+@app.route("/insights")
+def insights():
+    return render_template('blog_page.html',title='Insights')

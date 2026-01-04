@@ -1,33 +1,142 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="projects-section">
-    <h1>Farming Assistance Platform</h1>
+    <h1>KishanAi</h1>
+
+    <!-- KishanAi overview (two-column: text + farmer image) -->
+    <section class="kishanai-overview overview-grid" style="margin-bottom:24px;">
+      <div class="overview-grid__text">
+        <h2>About KishanAi</h2>
+        <p>
+          KishanAi is an intelligent farming assistant built to help small and medium-scale farmers
+          make faster, data-driven decisions. By combining lightweight computer-vision models,
+          simple agricultural heuristics and practical recommendations, KishanAi brings modern
+          precision-agriculture tools to everyday farming workflows — from early disease
+          detection to livestock health checks and crop planning.
+        </p>
+        <p>
+          Our goal is to reduce crop and livestock losses, save time for farmers, and increase
+          productivity by providing clear, actionable guidance through a simple web interface.
+          KishanAi focuses on accessibility, low-cost deployment (works with a standard webcam or smartphone),
+          and clear explainability so farmers understand both the problem and the recommended remedy.
+        </p>
+
+        <div class="overview-callout" style="margin-top:14px;">
+          <p class="callout-line">
+            <strong>KishanAi in a nutshell:</strong>
+            AI-assisted disease detection, practical next-steps, and simple crop planning — all from a browser.
+          </p>
+          <ul class="callout-features">
+            <li>Quick on-device image checks (works with a webcam ).</li>
+            <li>Lightweight models designed for low-bandwidth environments.</li>
+            <li>Record-and-track captures for follow-up or expert review.</li>
+          </ul>
+          <div class="project-buttons">
+            <a href="/insights" class="button live-demo">Get Some Insights</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="overview-grid__media" aria-hidden="false">
+        <!-- Put the farmer image into your static folder: static/pics/farmers.jpg -->
+        <img src="{{ url_for('static', filename='pics/farmer.jpg') }}" alt="Farmer in field" class="overview-farmer-image">
+      </div>
+    </section>
+
+    <!-- Display models with problem + solution -->
     <div class="projects-container">
+
+        <!-- Plant Disease Detection card -->
         <div class="project-card">
-            <img src="{{ url_for('static', filename='pics/plant_disease.jpg') }}" alt="Plant Disease Detection" class="project-image">
+            <img src="{{ url_for('static', filename='pics/plant.jpg') }}" alt="Plant Disease Detection" class="project-image">
             <h2>Plant Disease Detection</h2>
-            <p>Upload plant images to detect diseases and get recommendations for treatment.</p>
+            <p>Upload plant images or use the live camera to detect diseases and get treatment recommendations.</p>
+
+            <div class="model-details" style="margin-top:12px;">
+                <h3>Problem</h3>
+                <p>
+                    Farmers often discover diseases too late — after significant leaf/fruit damage — because
+                    visual symptoms can be subtle at first. Early-stage infections spread quickly and are
+                    hard to diagnose without experience, leading to yield loss and unnecessary pesticide use.
+                </p>
+
+                <h3>Solution (what KishanAi provides)</h3>
+                <ul>
+                    <li>Automated image-based detection of common plant diseases using a lightweight CNN model.</li>
+                    <li>Live camera stream with real-time overlay of predicted disease label so farmers can inspect plants continuously.</li>
+                    <li>Actionable advice and next steps (e.g., isolation, organic remedies, when to consult an agronomist).</li>
+                    <li>Periodic capture feature to save documented evidence for follow-up and tracking.</li>
+                </ul>
+            </div>
+
             <div class="project-buttons">
                 <a href="/plant_camera" class="button live-demo">Get Started</a>
             </div>
         </div>
+
+        <!-- Cow Skin Disease Detection card -->
         <div class="project-card">
-            <img src="{{ url_for('static', filename='pics/animal_disease.jpg') }}" alt="Cow Skin Disease" class="project-image">
+            <img src="{{ url_for('static', filename='pics/cow.jpg') }}" alt="Cow Skin Disease" class="project-image">
             <h2>Cow Skin Disease Detection</h2>
-            <p>Upload an image of your cow and get to know if its healthy or have some kind of skin disease</p>
+            <p>Upload an image of your cow to check skin health and get recommended steps.</p>
+
+            <div class="model-details" style="margin-top:12px;">
+                <h3>Problem</h3>
+                <p>
+                    Livestock skin conditions (parasites, infections, wounds) are common and can rapidly
+                    affect animal welfare and productivity. Small holders may miss early signs or apply
+                    incorrect treatments, increasing risk and veterinary costs.
+                </p>
+
+                <h3>Solution (what KishanAi provides)</h3>
+                <ul>
+                    <li>Image-based screening to identify common cow skin issues and categorize severity.</li>
+                    <li>Confidence score with explanations so farmers know how certain the model is.</li>
+                    <li>Practical advice (isolate animal, cleaning, topical treatment, consult veterinarian) tailored to the predicted condition.</li>
+                    <li>Option to keep records of images and predictions for vet appointments.</li>
+                </ul>
+            </div>
+
             <div class="project-buttons">
                 <a href="/cow_skin_disease" class="button live-demo">Get Started</a>
             </div>
         </div>
+
+        <!-- Crop Suggestion card -->
         <div class="project-card">
-            <img src="{{ url_for('static', filename='pics/crop_suggestion.jpg') }}" alt="Crop Suggestion" class="project-image">
+            <img src="{{ url_for('static', filename='pics/crop.jpg') }}" alt="Crop Suggestion" class="project-image">
             <h2>Crop Suggestion</h2>
-            <p>Based on your location (longitude and latitude) and market demand, get crop recommendations.</p>
+            <p>Get crop recommendations based on soil nutrients, weather, and local conditions.</p>
+
+            <div class="model-details" style="margin-top:12px;">
+                <h3>Problem</h3>
+                <p>
+                    Choosing the right crop for specific soil and climatic conditions can be difficult.
+                    Poor crop selection reduces yields and income. Farmers lack simple, localized guidance
+                    that factors in soil nutrients, pH, climate and rainfall patterns.
+                </p>
+
+                <h3>Solution (what KishanAi provides)</h3>
+                <ul>
+                    <li>A predictive recommendation engine that suggests suitable crops given N-P-K values, pH, temperature, humidity and rainfall.</li>
+                    <li>Practical suggestions ranked by suitability and estimated factors to monitor.</li>
+                    <li>Helps farmers plan crop cycles for better yield and reduced risk.</li>
+                </ul>
+            </div>
+
             <div class="project-buttons">
                 <a href="/crop_suggestion" class="button live-demo">Get Started</a>
             </div>
         </div>
-        </div>
+
     </div>
+
+    <!-- Call-to-action / footer note -->
+        <p style="color:#555;">
+            KishanAi is intended to provide guidance and early warnings — it does not replace professional veterinary
+            or agronomy advice. For critical issues, consult a certified expert.
+        </p>
+    </section>
+
 </div>
 {% endblock %}
